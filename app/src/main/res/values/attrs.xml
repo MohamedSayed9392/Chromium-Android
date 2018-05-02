@@ -81,4 +81,8 @@
         <!-- Used to customize the width of the popup menu. -->
         <attr name="menuWidth" format="reference|dimension" />
     </declare-styleable>
+
+    <declare-styleable name="TextViewCustomFont">
+        <attr name="fontName" format="string" />
+    </declare-styleable>
 </resources>

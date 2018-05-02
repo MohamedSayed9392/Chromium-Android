@@ -335,7 +335,7 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
     /**
      * @return The provider for toolbar related data.
      */
-    protected ToolbarDataProvider getToolbarDataProvider() {
+    public ToolbarDataProvider getToolbarDataProvider() {
         return mToolbarDataProvider;
     }
 

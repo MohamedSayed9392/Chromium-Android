@@ -960,7 +960,7 @@ public class CustomTabActivity extends ChromeActivity {
     }
 
     @Override
-    protected void showAppMenuForKeyboardEvent() {
+    public void showAppMenuForKeyboardEvent() {
         if (!shouldShowAppMenu()) return;
         super.showAppMenuForKeyboardEvent();
     }

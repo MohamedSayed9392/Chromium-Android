@@ -37,6 +37,8 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
 import android.view.accessibility.AccessibilityManager.TouchExplorationStateChangeListener;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
@@ -51,6 +53,8 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.AdSystem.FacebookNativeAdActivity;
+import org.chromium.chrome.browser.AdSystem.InterstitialAdManager;
 import org.chromium.chrome.browser.IntentHandler.IntentHandlerDelegate;
 import org.chromium.chrome.browser.IntentHandler.TabOpenType;
 import org.chromium.chrome.browser.appmenu.AppMenu;
@@ -59,6 +63,7 @@ import org.chromium.chrome.browser.appmenu.AppMenuObserver;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.bookmarks.BookmarkModel;
 import org.chromium.chrome.browser.bookmarks.BookmarkUtils;
+import org.chromium.chrome.browser.bottombar.BottomBar;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
@@ -66,6 +71,7 @@ import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
 import org.chromium.chrome.browser.compositor.layouts.SceneChangeObserver;
 import org.chromium.chrome.browser.compositor.layouts.content.ContentOffsetProvider;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
+import org.chromium.chrome.browser.compositor.layouts.phone.StackLayout;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchFieldTrial;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager
@@ -204,7 +210,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             (activity, delegate, menuResourceId) -> new AppMenuHandler(activity, delegate,
                     menuResourceId);
 
-    private TabModelSelector mTabModelSelector;
+    public TabModelSelector mTabModelSelector;
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private TabCreatorManager.TabCreator mRegularTabCreator;
     private TabCreatorManager.TabCreator mIncognitoTabCreator;
@@ -1159,6 +1165,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             manager.removeTouchExplorationStateChangeListener(mTouchExplorationStateChangeListener);
         }
 
+        InterstitialAdManager.loadFacebookInterstitialAd(this);
+
         super.onDestroy();
     }
 
@@ -1298,7 +1306,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     * Shows the app menu (if possible) for a key press on the keyboard with the correct anchor view
     * chosen depending on device configuration and the visible menu button to the user.
     */
-    protected void showAppMenuForKeyboardEvent() {
+    public void showAppMenuForKeyboardEvent() {
         if (getAppMenuHandler() == null) return;
 
         TextBubble.dismissBubbles();
@@ -1399,6 +1407,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 bookmarkModel.destroy();
             }
         });
+
+        BottomBar.bottomBar.updatePageBookmarked();
     }
 
     /**
@@ -1726,6 +1736,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
     @Override
     public final void onBackPressed() {
+        if(BottomBar.bottomBar.isSliderExpanded()) return;
+
         if (mNativeInitialized) RecordUserAction.record("SystemBack");
 
         TextBubble.dismissBubbles();
@@ -1927,6 +1939,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             final boolean usingDesktopUserAgent = currentTab.getUseDesktopUserAgent();
             currentTab.setUseDesktopUserAgent(!usingDesktopUserAgent, reloadOnChange);
             RecordUserAction.record("MobileMenuRequestDesktopSite");
+            BottomBar.bottomBar.updateDesktopMode();
+            Toast.makeText(this,"desktop : "+usingDesktopUserAgent,Toast.LENGTH_LONG).show();
         } else if (id == R.id.reader_mode_prefs_id) {
             if (currentTab.getWebContents() != null) {
                 RecordUserAction.record("DomDistiller_DistilledPagePrefsOpened");

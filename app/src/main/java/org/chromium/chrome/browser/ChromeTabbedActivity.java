@@ -53,6 +53,7 @@ import org.chromium.chrome.browser.IntentHandler.IntentHandlerDelegate;
 import org.chromium.chrome.browser.IntentHandler.TabOpenType;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.bookmarks.BookmarkUtils;
+import org.chromium.chrome.browser.bottombar.BottomBar;
 import org.chromium.chrome.browser.browseractions.BrowserActionsService;
 import org.chromium.chrome.browser.browseractions.BrowserActionsTabModelSelector;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
@@ -1535,6 +1536,8 @@ public class ChromeTabbedActivity
 
         mUndoBarPopupController = new UndoBarController(this, mTabModelSelectorImpl,
                 getSnackbarManager());
+
+        BottomBar bottomBar = new BottomBar(this);
     }
 
     @Override
@@ -2063,7 +2066,7 @@ public class ChromeTabbedActivity
         }
     }
 
-    private void toggleOverview() {
+    public void toggleOverview() {
         Tab currentTab = getActivityTab();
         // If we don't have a current tab, show the overview mode.
         if (currentTab == null) {
@@ -2188,7 +2191,7 @@ public class ChromeTabbedActivity
     }
 
     @Override
-    protected void showAppMenuForKeyboardEvent() {
+    public void showAppMenuForKeyboardEvent() {
         if (!mUIInitialized || isFullscreenVideoPlaying()) return;
         super.showAppMenuForKeyboardEvent();
     }

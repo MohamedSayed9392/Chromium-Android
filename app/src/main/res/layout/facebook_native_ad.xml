@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@android:drawable/screen_background_dark_transparent">
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rv_cornerRadius="15dp"
+        app:rv_backgroundColor="@android:color/white"
+        android:layout_margin="30dp"
+        android:orientation="vertical"
+        android:id="@+id/linAd">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:riv_corner_radius="5dp"
+                android:id="@+id/imAdIcon" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtTitle"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtSubTitle"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtGetIt"
+                    android:textColor="@android:color/darker_gray" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <com.facebook.ads.MediaView
+            android:layout_width="match_parent"
+            android:id="@+id/mediaView"
+            android:layout_height="200dp"></com.facebook.ads.MediaView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/imAdCover"
+            android:visibility="gone"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtDesc"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/black" />
+
+        <com.flyco.roundview.RoundTextView
+            android:layout_width="match_parent"
+            app:rv_cornerRadius_BL="15dp"
+            app:rv_cornerRadius_BR="15dp"
+            android:text="تثبيت الآن"
+            android:id="@+id/txtInstall"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:rv_backgroundColor="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white"
+            android:padding="7dp"
+            android:layout_weight="1" />
+
+    </com.flyco.roundview.RoundLinearLayout>
+
+    <com.flyco.roundview.RoundTextView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:rv_cornerRadius="35dp"
+        app:rv_backgroundColor="@android:color/holo_blue_dark"
+        android:text="X"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:id="@+id/txtClose"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="15dp" />
+
+</RelativeLayout>

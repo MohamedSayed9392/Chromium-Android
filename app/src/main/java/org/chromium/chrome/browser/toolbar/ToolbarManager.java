@@ -36,6 +36,7 @@ import org.chromium.chrome.browser.appmenu.AppMenuHandler;
 import org.chromium.chrome.browser.appmenu.AppMenuObserver;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge;
+import org.chromium.chrome.browser.bottombar.BottomBar;
 import org.chromium.chrome.browser.compositor.Invalidator;
 import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
@@ -184,10 +185,12 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
      * @param invalidator Handler for synchronizing invalidations across UI elements.
      * @param urlFocusChangedCallback The callback to be notified when the URL focus changes.
      */
+    ChromeActivity activity;
     public ToolbarManager(final ChromeActivity activity,
             ToolbarControlContainer controlContainer, final AppMenuHandler menuHandler,
             AppMenuPropertiesDelegate appMenuPropertiesDelegate,
             Invalidator invalidator, Callback<Boolean> urlFocusChangedCallback) {
+        this.activity = activity;
         if (activity.getBottomSheet() != null) {
             mActionBarDelegate =
                     new ViewShiftingActionBarDelegate(activity, activity.getBottomSheet());
@@ -1139,6 +1142,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     private void updateTabCount() {
         if (!mTabRestoreCompleted || !mShouldUpdateTabCount) return;
         mToolbar.updateTabCountVisuals(mTabModelSelector.getCurrentModel().getCount());
+        BottomBar.bottomBar.updateTabsSwitcheCount();
+
     }
 
     /**

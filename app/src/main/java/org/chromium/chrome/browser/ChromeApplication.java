@@ -6,6 +6,9 @@ package org.chromium.chrome.browser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.provider.Settings;
+
+import com.facebook.ads.AdSettings;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
@@ -30,6 +33,9 @@ import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelSelector;
 import org.chromium.chrome.browser.tabmodel.document.StorageDelegate;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.content.app.ContentApplication;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Basic application functionality that should be shared among all browser applications that use
@@ -75,6 +81,7 @@ public class ChromeApplication extends ContentApplication {
 
         TraceEvent.end("ChromeApplication.onCreate");
     }
+
 
     @Override
     public void onTrimMemory(int level) {

@@ -86,4 +86,13 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:$rootProject.ext.runnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
+
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation ('com.facebook.android:audience-network-sdk:4.28.1'){
+        exclude group: "com.google.android.gms"
+    }
+    implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
+    implementation 'com.makeramen:roundedimageview:2.2.1'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.florent37:glidepalette:1.0.4@aar'
 }
